@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbenaddi <hbenaddi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hbenaddi <hbenaddi@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 18:15:44 by hbenaddi          #+#    #+#             */
-/*   Updated: 2024/08/26 18:59:31 by hbenaddi         ###   ########.fr       */
+/*   Updated: 2024/08/26 21:20:39 by hbenaddi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,12 @@ char    *check_input(char *str)
     else if (*str == '-')
     {
         printf("Don't put negatif num");
-        exit(0) ;
+        return (NULL);
     }
     if (ft_isdigit(*str) == 0)
     {  
         printf("You didnt put num wtf");
-        exit(0) ;
+        return (NULL);
     }
     num = str;
     while (ft_isdigit(*str++))
@@ -54,7 +54,7 @@ char    *check_input(char *str)
     if (len > 10)
     {  
         printf("You didnt good INT wtf");
-        exit(0) ;
+        return (NULL);
     }
     return (num);
 }
