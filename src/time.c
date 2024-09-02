@@ -3,13 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   time.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbenaddi <hbenaddi@student.42lehavre.fr    +#+  +:+       +#+        */
+/*   By: hbenaddi <hbenaddi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 16:52:25 by hbenaddi          #+#    #+#             */
-/*   Updated: 2024/08/29 16:53:42 by hbenaddi         ###   ########.fr       */
+/*   Updated: 2024/08/31 13:09:26 by hbenaddi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-gettimeofday();
+gettimeofday()
+{    
+}

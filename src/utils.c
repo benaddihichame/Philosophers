@@ -3,23 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbenaddi <hbenaddi@student.42lehavre.fr    +#+  +:+       +#+        */
+/*   By: hbenaddi <hbenaddi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 18:15:44 by hbenaddi          #+#    #+#             */
-/*   Updated: 2024/08/26 21:20:39 by hbenaddi         ###   ########.fr       */
+/*   Updated: 2024/08/31 18:20:38 by hbenaddi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int ft_strlen(char *s)
+int    error_exit(const char *str)
 {
-    int i = 0;
-
-    i = 0;
-    while (s[i])
-        i++;
-    return (i);
+    printf("%s", str);
+    return (1);
 }
 int	ft_isdigit(char c)
 {
@@ -61,7 +57,6 @@ char    *check_input(char *str)
 long	mod_atol(char *s)
 {
 	long	res;
-	int		sign;
 
     s = check_input(s);
 	res = 0;
@@ -71,11 +66,4 @@ long	mod_atol(char *s)
         s++;
     }
     return (res);
-}
-
-int main()
-{
-   char *s = "-132";
-	long result = mod_atol(s);
-	printf("%ld\n", result);
 }

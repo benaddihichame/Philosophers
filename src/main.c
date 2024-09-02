@@ -6,25 +6,29 @@
 /*   By: hbenaddi <hbenaddi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 13:55:27 by hbenaddi          #+#    #+#             */
-/*   Updated: 2024/08/26 11:58:48 by hbenaddi         ###   ########.fr       */
+/*   Updated: 2024/08/31 18:14:10 by hbenaddi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void*	fonctionnn()
-{
-	printf("johnpork is calling\n");
-	sleep(3);
-	printf("you decline\n");
+
+void *threadFunction(void *arg) {
+    printf("This is the detached thread.\n");
+    // Simulate some work in the thread
+    sleep(2);
+    printf("The detached thread is done.\n");
+    // No need to explicitly call pthread_exit() in a detached thread
+    return NULL;
 }
-int main()
+
+int main(int ac, char **av)
 {
-	pthread_t t1;
-	pthread_t t2;
-	pthread_create(&t1, NULL, &fonctionnn, NULL);
-	pthread_create(&t2, NULL, &fonctionnn, NULL);
-	pthread_join(t1, NULL);
-	pthread_join(t2, NULL);
-	return 0;
+    if(ac == 5 || ac == 6)
+    {
+
+    }
+    else
+        
+    return 0;
 }

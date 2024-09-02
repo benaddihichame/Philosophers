@@ -6,32 +6,12 @@ SRC_DIR = src
 OBJ_DIR = obj
 CMD_DIR = cmd
 
-SRCS = $(SRC_DIR)/init.c \
-			$(SRC_DIR)/main.c \
-			$(SRC_DIR)/3reverse.c \
-			$(SRC_DIR)/1rotate.c \
-			$(SRC_DIR)/2push.c \
-			$(SRC_DIR)/4swap.c \
-			$(SRC_DIR)/search.c \
-			$(SRC_DIR)/algo.c \
-			$(SRC_DIR)/stack.c \
+SRCS = $(SRC_DIR)/the_table.c \
 			$(SRC_DIR)/utils.c \
-			$(SRC_DIR)/target.c \
 
 
-
-OBJS = $(OBJ_DIR)/init.o \
-			$(OBJ_DIR)/3reverse.o \
-			$(OBJ_DIR)/1rotate.o \
-			$(OBJ_DIR)/2push.o \
-			$(OBJ_DIR)/4swap.o \
-			$(OBJ_DIR)/main.o \
-			$(OBJ_DIR)/search.o \
-			$(OBJ_DIR)/algo.o \
-			$(OBJ_DIR)/stack.o \
+OBJS = $(OBJ_DIR)/the_table.o \
 			$(OBJ_DIR)/utils.o \
-			$(OBJ_DIR)/target.o
-
 
 all: $(NAME)
 
