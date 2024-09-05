@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbenaddi <hbenaddi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hbenaddi <hbenaddi@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:46:27 by hbenaddi          #+#    #+#             */
-/*   Updated: 2024/09/03 21:21:32 by hbenaddi         ###   ########.fr       */
+/*   Updated: 2024/09/04 10:42:46 by hbenaddi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,8 @@ int    data_init(t_table *args)
 
     i = 0;
     args->philo = malloc(sizeof(t_philo) * args->human);
-    args->forks = malloc(sizeof(pthread_mutex_t) * args->human);
+    args->forks = malloc(sizeof(t_fork) * args->human);
+    pthread_mutex_init(&args->mtx_table, NULL);
     if (!args->philo || !args->forks)
         return (error_exit("Error : Malloc"));
     while (i < args->human)
