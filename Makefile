@@ -1,17 +1,24 @@
 
-CC = gcc
+CC = cc
 CFLAGS = -Wall -Werror -Wextra -Iinclude -pthread -g3
 NAME = philosopher
 SRC_DIR = src
 OBJ_DIR = obj
 CMD_DIR = cmd
 
-SRCS = $(SRC_DIR)/the_table.c \
+SRCS = $(SRC_DIR)/init.c \
 			$(SRC_DIR)/utils.c \
+			$(SRC_DIR)/time.c \
+			$(SRC_DIR)/mod_atol.c \
+			$(SRC_DIR)/main.c \
 
 
-OBJS = $(OBJ_DIR)/the_table.o \
+OBJS = $(OBJ_DIR)/init.o \
 			$(OBJ_DIR)/utils.o \
+			$(OBJ_DIR)/time.o \
+			$(OBJ_DIR)/main.o \
+			$(OBJ_DIR)/mod_atol.o \
+
 
 all: $(NAME)
 

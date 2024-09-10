@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   time.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbenaddi <hbenaddi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hbenaddi <hbenaddi@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 16:52:25 by hbenaddi          #+#    #+#             */
-/*   Updated: 2024/09/03 16:44:11 by hbenaddi         ###   ########.fr       */
+/*   Updated: 2024/09/06 12:56:42 by hbenaddi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,17 +54,4 @@ int ft_usleep(size_t millisecondes)
         usleep(500);  // Dors pendant 500 microsecondes (0,5 millisecondes) pour réduire la charge CPU.
     }
     return (0);  // Retourne 0 pour indiquer que la fonction s'est terminée correctement.
-}
-#include <stdio.h>
-
-int main(void)
-{
-    printf("Début de la pause de 2000 millisecondes (2 secondes)\n");
-    
-    // Appelle ft_usleep pour une pause de 2000 millisecondes.
-    ft_usleep(2000);
-    
-    printf("Fin de la pause\n");
-    
-    return 0;
 }

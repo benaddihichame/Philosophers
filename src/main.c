@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbenaddi <hbenaddi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hbenaddi <hbenaddi@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 13:55:27 by hbenaddi          #+#    #+#             */
-/*   Updated: 2024/09/03 21:07:02 by hbenaddi         ###   ########.fr       */
+/*   Updated: 2024/09/10 15:55:31 by hbenaddi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,9 @@ int main(int ac, char **av)
     if(ac == 5 || ac == 6)
     {
         if (parsing(&args, av) == 0)
-            return (error_exit("Error : In The Parsing\n"));
-        if (data_init(&args) == 1)   
-            return (error_exit("Error : In The Initialization"));
-        
+            return (1);
     }
     else
-        printf("wrong number of arg");
+        printf("\033[1;31mERROR : WRONG NUMBER OF ARGUMENT\033[0m\n");
     return 0;
 }
