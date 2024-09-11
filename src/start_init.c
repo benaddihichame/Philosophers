@@ -1,36 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   start_init.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbenaddi <hbenaddi@student.42lehavre.fr    +#+  +:+       +#+        */
+/*   By: hbenaddi <hbenaddi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:46:27 by hbenaddi          #+#    #+#             */
-/*   Updated: 2024/09/10 15:58:32 by hbenaddi         ###   ########.fr       */
+/*   Updated: 2024/09/11 17:36:23 by hbenaddi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void    init_forks(t_forks *forks, t_table *table)
+int    init_forks(t_forks *forks, t_table *table)
 {
     int i;
 
     i = 0;
     table->forks = malloc(sizeof(t_forks) * table->human);
+    if (!table->forks)
+        return (0);
     while (i < table->human)
     {
         forks[i].used = 0;
         handle_mutex(&forks[i].locked, INIT);
         i++;
     }
+    return (1);
 }
-void    init_philo(t_philo *philo, t_forks *fork, t_table *table)
+int    init_philo(t_philo *philo, t_forks *fork, t_table *table)
 {
     int i;
 
     i = 0;
     table->philo = malloc(sizeof(t_philo) * table->human);
+    if (!table->philo)
+        return (0);
     while (i < table->human)
     {
         philo->id = i + 1;
@@ -44,6 +49,7 @@ void    init_philo(t_philo *philo, t_forks *fork, t_table *table)
         philo[i].table = table;
         i++;
     }
+    return (1);
 }
 int test_param(t_table *arg)
 {
@@ -67,18 +73,15 @@ int    parsing(t_table *arg, char **av)
         arg->size_stomach = -1;
     if (test_param(arg) == 0)
         error_exit("\033[1;31mERROR : ONE OR MUTLTIPLE ARG NOT GOOD\033[0m\n");
-    init_forks(arg->forks, arg);
-    init_philo(arg->philo, arg->forks, arg);
+    if (init_forks(arg->forks, arg) == 0)
+    {
+        printf("Error : In the init of forks\n");
+        return (0);
+    }
+    if (init_philo(arg->philo, arg->forks, arg) == 0)
+    {
+        printf("Error : In the init of philo\n");
+        return (0);
+    }
     return (1);
 }
-// void    init_thread(t_table *table)
-// {
-//     int i;
-    
-//     i = 0;
-//     while (i < table->human)
-//     {
-//         pthread_create(&table->philo[i], NULL, routine, &table->philo[i]);
-//         i++;
-//     }
-// }

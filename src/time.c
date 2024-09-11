@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   time.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbenaddi <hbenaddi@student.42lehavre.fr    +#+  +:+       +#+        */
+/*   By: hbenaddi <hbenaddi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 16:52:25 by hbenaddi          #+#    #+#             */
-/*   Updated: 2024/09/06 12:56:42 by hbenaddi         ###   ########.fr       */
+/*   Updated: 2024/09/11 21:25:32 by hbenaddi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,20 @@ size_t get_curren_time(void)
  * ft_usleep est utile pour introduire des pauses précises et contrôlées dans les actions des philosophes,
  * permettant ainsi une synchronisation efficace et respectueuse des ressources dans le projet.
  */
-int ft_usleep(size_t millisecondes)
+int ft_usleep(size_t millisecondes, t_philo *philo)
 {
     size_t start;
+    int health;
 
     start = get_curren_time();  // Récupère le temps de départ en millisecondes.
-    
     // Boucle jusqu'à ce que le temps écoulé atteigne le nombre de millisecondes spécifié.
     while (get_curren_time() - start < millisecondes)
     {
+        handle_mutex(&philo->table->die_mutex, LOCK);
+        health = philo->table->died;
+        handle_mutex(&philo->table->die_mutex, UNLOCK);
+        if (health == 1)
+            break ;
         usleep(500);  // Dors pendant 500 microsecondes (0,5 millisecondes) pour réduire la charge CPU.
     }
     return (0);  // Retourne 0 pour indiquer que la fonction s'est terminée correctement.

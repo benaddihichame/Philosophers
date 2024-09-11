@@ -6,14 +6,14 @@ SRC_DIR = src
 OBJ_DIR = obj
 CMD_DIR = cmd
 
-SRCS = $(SRC_DIR)/init.c \
+SRCS = $(SRC_DIR)/start_init.c \
 			$(SRC_DIR)/utils.c \
 			$(SRC_DIR)/time.c \
 			$(SRC_DIR)/mod_atol.c \
 			$(SRC_DIR)/main.c \
 
 
-OBJS = $(OBJ_DIR)/init.o \
+OBJS = $(OBJ_DIR)/start_init.o \
 			$(OBJ_DIR)/utils.o \
 			$(OBJ_DIR)/time.o \
 			$(OBJ_DIR)/main.o \

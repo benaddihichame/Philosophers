@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbenaddi <hbenaddi@student.42lehavre.fr    +#+  +:+       +#+        */
+/*   By: hbenaddi <hbenaddi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 13:55:48 by hbenaddi          #+#    #+#             */
-/*   Updated: 2024/09/10 15:32:24 by hbenaddi         ###   ########.fr       */
+/*   Updated: 2024/09/11 21:26:04 by hbenaddi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,18 +72,35 @@ typedef enum e_code
     CREATE,
 }   t_code;
 
-int    parsing(t_table *arg, char **av);
+typedef enum e_action
+{
+    EAT,
+    THINK,
+    SLEEP,
+}   t_action;
+
+//                  ACTION
+void	eating(t_philo *philo);
+void	sleeping(t_philo *philo);
+void	thinking(t_philo *philo);
 void	*routine(void *arg);
+
+//                  INITIALIZATION
+int    init_thread(t_table *table);
+int    parsing(t_table *arg, char **av);
+char    *check_input(char *str);
+void    handle_mutex(pthread_mutex_t *mutex, t_code code);
+
 //              Time
-int ft_usleep(size_t millisecondes);
+int ft_usleep(size_t millisecondes, t_philo *philo);
 size_t get_curren_time(void);
 
 //                     Utils
-char    *check_input(char *str);
+void    free_stuff(t_table *table);
 int    error_exit(const char *str);
 int ft_isdigit(char c);
 int error_exit(const char *str);
 long	mod_atol(char *s);
-void    handle_mutex(pthread_mutex_t *mutex, t_code code);
+void	who_is_doing(t_philo *philo, t_code code);
 
 #endif

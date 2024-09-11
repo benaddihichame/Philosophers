@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mod_atol.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbenaddi <hbenaddi@student.42lehavre.fr    +#+  +:+       +#+        */
+/*   By: hbenaddi <hbenaddi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 18:15:44 by hbenaddi          #+#    #+#             */
-/*   Updated: 2024/09/10 15:53:36 by hbenaddi         ###   ########.fr       */
+/*   Updated: 2024/09/11 13:45:14 by hbenaddi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,16 @@ char    *check_input(char *str)
         printf("\033[1;31mERROR: DON'T PUT NEGATIVE NUMBERS\033[0m\n");
         return (NULL);
     }
-    if (ft_isdigit(*str) == 0)
-    {  
+    while(str[len])
+    {
+        if (ft_isdigit(str[len]) == 0)
+        {
         printf("\033[1;31mERROR: YOU DIDN'T PUT A DIGIT\033[0m\n");
         return (NULL);
+        }
+        len++;
     }
+    len = 0;
     num = str;
     while (ft_isdigit(*str++))
         len++;
@@ -53,14 +58,17 @@ long	mod_atol(char *s)
 {
 	long	res;
 
-    s = check_input(s);
-    if (s == NULL)
-        error_exit("\033[1;31mERROR : ATOL\033[0m\n");
-	res = 0;
+    	s = check_input(s);
+    	if (s == NULL)
+        {
+        	printf("\033[1;31mERROR : ATOL\033[0m\n");
+            return 0;
+        }
+        res = 0;
 	while (*s >= '0' && *s <= '9')
-    {
-        res = res * 10 + (*s - '0');
-        s++;
-    }
-    return (res);
+    	{
+    		res = res * 10 + (*s - '0');
+		s++;
+	}
+	return (res);
 }
