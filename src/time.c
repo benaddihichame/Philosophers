@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   time.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbenaddi <hbenaddi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hbenaddi <hbenaddi@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 16:52:25 by hbenaddi          #+#    #+#             */
-/*   Updated: 2024/09/11 21:25:32 by hbenaddi         ###   ########.fr       */
+/*   Updated: 2024/09/16 11:47:23 by hbenaddi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
  *
  */
 
-size_t get_curren_time(void)
+long get_curren_time(void)
 {
     struct timeval time;  // Déclare une structure timeval pour stocker le temps.
 

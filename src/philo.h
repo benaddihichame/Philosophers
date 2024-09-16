@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbenaddi <hbenaddi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hbenaddi <hbenaddi@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 13:55:48 by hbenaddi          #+#    #+#             */
-/*   Updated: 2024/09/11 21:26:04 by hbenaddi         ###   ########.fr       */
+/*   Updated: 2024/09/16 12:12:39 by hbenaddi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 typedef struct s_forks
 {
     pthread_mutex_t locked; // Mutex pour verrouiller l'accès à la fourchette
-    int used;               // Indique si la fourchette est actuellement utilisée
+    int num;               // Indique si la fourchette est actuellement utilisée
 }   t_forks;
 
 // Structure pour représenter un philosophe
@@ -54,9 +54,9 @@ typedef struct s_table
     int end;                    // Indique si la simulation est terminée
     int died;                   // Indique si un philosophe est mort
     bool thread_ready;          // Indique si tous les threads sont prêts
-    size_t starting;            // Temps de départ de la simulation
+    long starting;            // Temps de départ de la simulation
     pthread_mutex_t die_mutex;  // Mutex pour protéger l'accès à la variable 'died'
-    pthread_t *death_thrad;     // Thread pour vérifier si un philosophe est mort
+    pthread_t death_thread;     // Thread pour vérifier si un philosophe est mort
     t_philo *philo;             // Tableau des philosophes
     t_forks *forks;             // Tableau des fourchettes
 }   t_table;
@@ -74,9 +74,12 @@ typedef enum e_code
 
 typedef enum e_action
 {
+    DIE,
     EAT,
     THINK,
     SLEEP,
+    GRABLEFT,
+    GRABRIGHT,
 }   t_action;
 
 //                  ACTION
@@ -84,6 +87,9 @@ void	eating(t_philo *philo);
 void	sleeping(t_philo *philo);
 void	thinking(t_philo *philo);
 void	*routine(void *arg);
+void	drop_fork(t_philo *philo);
+void	take_fork(t_philo *philo);
+void	*undertaker(void *arg);
 
 //                  INITIALIZATION
 int    init_thread(t_table *table);
@@ -93,14 +99,12 @@ void    handle_mutex(pthread_mutex_t *mutex, t_code code);
 
 //              Time
 int ft_usleep(size_t millisecondes, t_philo *philo);
-size_t get_curren_time(void);
+long get_curren_time(void);
 
 //                     Utils
 void    free_stuff(t_table *table);
-int    error_exit(const char *str);
 int ft_isdigit(char c);
-int error_exit(const char *str);
 long	mod_atol(char *s);
-void	who_is_doing(t_philo *philo, t_code code);
-
+void	who_is_doing(t_philo *philo, t_action code);
+void	free_all(t_table *table);
 #endif

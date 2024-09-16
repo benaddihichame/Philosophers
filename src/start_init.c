@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   start_init.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbenaddi <hbenaddi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hbenaddi <hbenaddi@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:46:27 by hbenaddi          #+#    #+#             */
-/*   Updated: 2024/09/11 17:36:23 by hbenaddi         ###   ########.fr       */
+/*   Updated: 2024/09/16 12:07:46 by hbenaddi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,11 @@ int    init_forks(t_forks *forks, t_table *table)
         return (0);
     while (i < table->human)
     {
-        forks[i].used = 0;
+        forks[i].num = i;
         handle_mutex(&forks[i].locked, INIT);
         i++;
     }
+    handle_mutex(&table->die_mutex, INIT);
     return (1);
 }
 int    init_philo(t_philo *philo, t_forks *fork, t_table *table)
@@ -36,12 +37,14 @@ int    init_philo(t_philo *philo, t_forks *fork, t_table *table)
     table->philo = malloc(sizeof(t_philo) * table->human);
     if (!table->philo)
         return (0);
+    table->starting = get_curren_time();
     while (i < table->human)
     {
         philo->id = i + 1;
         philo->meal_counter = 0;
         philo->time_from_last_meal = 0;
         philo->using_left = 0;
+        table->died = 0;
         philo->using_right = 0;
         philo->left_fork = &fork[i];
         philo->right_forks = &fork[(i + 1) % table->human];
@@ -54,9 +57,15 @@ int    init_philo(t_philo *philo, t_forks *fork, t_table *table)
 int test_param(t_table *arg)
 {
     if (arg->human > 200 || arg->time_to_die < 0 || arg->time_to_eat < 0 || arg->time_to_sleep < 0)
+    {
+        printf("\033[1;31mERROR : ONE OR MUTLTIPLE ARG NOT GOOD\033[0m\n");
         return (0);
+    }
     if (arg->time_to_die > INT_MAX || arg->time_to_eat > INT_MAX || arg->time_to_sleep > INT_MAX)
+    {
+        printf("\033[1;31mERROR : ONE OR MUTLTIPLE ARG IS ABOVE THE MAX VALUE\033[0m\n");
         return (0);
+    }
     return (1);
 }
 int    parsing(t_table *arg, char **av)
@@ -65,14 +74,12 @@ int    parsing(t_table *arg, char **av)
     arg->time_to_die = mod_atol(av[2]) * 1000;
     arg->time_to_eat = mod_atol(av[3]) * 1000;
     arg->time_to_sleep = mod_atol(av[4]) * 1000;
-    if (arg->time_to_die < 6000 || arg->time_to_eat < 6000 || arg->time_to_sleep < 6000)
-        error_exit("\033[1;31mERROR : DON'T GO UNDER 60ms\033[0m\n");
     if (av[5])
         arg->size_stomach = mod_atol(av[5]);
     else
         arg->size_stomach = -1;
     if (test_param(arg) == 0)
-        error_exit("\033[1;31mERROR : ONE OR MUTLTIPLE ARG NOT GOOD\033[0m\n");
+        return (0);
     if (init_forks(arg->forks, arg) == 0)
     {
         printf("Error : In the init of forks\n");

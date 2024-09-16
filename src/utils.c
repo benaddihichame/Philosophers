@@ -3,34 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbenaddi <hbenaddi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hbenaddi <hbenaddi@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 13:39:44 by hbenaddi          #+#    #+#             */
-/*   Updated: 2024/09/11 20:36:02 by hbenaddi         ###   ########.fr       */
+/*   Updated: 2024/09/16 12:13:48 by hbenaddi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	who_is_doing(t_philo *philo, t_code code)
+void	who_is_doing(t_philo *philo, t_action code)
 {
 	if (code == EAT)
-	{
 		printf("\033[38;5;214mThe Philo num %d is eating\033[0m\n", philo->id);
-	}
-	if(code == SLEEP)
-	{
+	if (code == SLEEP)
 		printf("\033[38;5;129mThe Philo num %d is sleeping\033[0m\n", philo->id);
-	}
 	if(code == THINK)
-	{
 		printf("\033[38;5;34mThe Philo num %d is sleeping\033[0m\n", philo->id);
-	}
-}
-int    error_exit(const char *str)
-{
-    printf("%s", str);
-    return(1);
+    if (code == GRABLEFT)
+    	printf("\033[38;5;34mThe Philo num %d is tacking left fork\033[0m\n", philo->id);
+    if (code == GRABRIGHT)
+    	printf("\033[38;5;34mThe Philo num %d is tacking right fork\033[0m\n", philo->id);
+    if (code == DIE)
+        printf("\033[38;5;34mThe Philo num %d DIED\033[0m\n", philo->id);
 }
 void    handle_mutex(pthread_mutex_t *mutex, t_code code)
 {
@@ -43,16 +38,24 @@ void    handle_mutex(pthread_mutex_t *mutex, t_code code)
     else if (code == DESTROY)
         pthread_mutex_destroy(mutex);
     else
-        error_exit("ERROR : code not good");
+        {
+            printf("Error code\n");
+            return ;
+        }
 }
-void    free_stuff(t_table *table)
+void	free_all(t_table *table)
 {
-    int i = 0;
+	int	i;
 
-    while (i < table->human)
-    {
-        free(table->philo);
-        free(table->forks);
-        i++;
-    }
+	i = 0;
+	while (i < table->human)
+	{
+		pthread_mutex_destroy(&table->philo[i].meal_lock);
+		pthread_mutex_destroy(&table->forks[i].locked);
+		i++;
+	}
+	i = 0;
+	pthread_mutex_destroy(&table->die_mutex);
+	free(table->philo);
+	free(table->forks);
 }
