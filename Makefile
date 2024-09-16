@@ -6,12 +6,12 @@
 #    By: hbenaddi <hbenaddi@student.42lehavre.fr    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/15 22:49:44 by hbenaddi          #+#    #+#              #
-#    Updated: 2024/09/15 22:49:45 by hbenaddi         ###   ########.fr        #
+#    Updated: 2024/09/16 12:24:44 by hbenaddi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -Iinclude -pthread -g3
+CFLAGS = -Wall -Werror -Wextra -Iinclude -fsanitize=address -pthread -g3
 NAME = philosopher
 SRC_DIR = src
 OBJ_DIR = obj
@@ -23,34 +23,23 @@ SRCS = $(SRC_DIR)/start_init.c \
 			$(SRC_DIR)/creation.c \
 			$(SRC_DIR)/time.c \
 			$(SRC_DIR)/mod_atol.c \
-			$(SRC_DIR)/main.c \
+			$(SRC_DIR)/main.c
 
-
-OBJS = $(OBJ_DIR)/start_init.o \
-			$(OBJ_DIR)/utils.o \
-			$(OBJ_DIR)/time.o \
-			$(OBJ_DIR)/action.o \
-			$(OBJ_DIR)/creation.o \
-			$(OBJ_DIR)/main.o \
-			$(OBJ_DIR)/mod_atol.o \
-
+OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(LFLAGS)
+	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(OBJ_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
 
-
 clean:
-	$(MAKE) -C clean
-	rm -f $(OBJS)
+	rm -rf $(OBJ_DIR)
 
 fclean: clean
-	$(MAKE) -C fclean
 	rm -f $(NAME)
 
 re: fclean all
