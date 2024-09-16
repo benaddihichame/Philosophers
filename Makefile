@@ -11,7 +11,7 @@
 # **************************************************************************** #
 
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -Iinclude -fsanitize=address -pthread -g3
+CFLAGS = -Wall -Werror -Wextra -Iinclude  -pthread -g3
 NAME = philosopher
 SRC_DIR = src
 OBJ_DIR = obj

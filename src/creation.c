@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   creation.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbenaddi <hbenaddi@student.42lehavre.fr    +#+  +:+       +#+        */
+/*   By: hbenaddi <hbenaddi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:35:34 by hbenaddi          #+#    #+#             */
-/*   Updated: 2024/09/16 12:07:23 by hbenaddi         ###   ########.fr       */
+/*   Updated: 2024/09/16 17:52:02 by hbenaddi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,12 +81,12 @@ int    init_thread(t_table *table)
 	i = 0;
     while (i < table->human)
     {
-        if (pthread_create(&table->philo[i].philo_thread, NULL, routine, &table->philo[i]))
+        if (pthread_create(&table->philo[i].philo_thread, NULL, &routine, &table->philo[i]))
 			return (0);
         usleep(100);
 		i++;
     }
-	if (pthread_create(&table->death_thread, NULL, undertaker, table))
+	if (pthread_create(&table->death_thread, NULL, &undertaker, table))
 		return (0);
 	pthread_join(table->death_thread, NULL);
 	i = 0;

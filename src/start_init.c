@@ -3,78 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   start_init.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbenaddi <hbenaddi@student.42lehavre.fr    +#+  +:+       +#+        */
+/*   By: hbenaddi <hbenaddi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:46:27 by hbenaddi          #+#    #+#             */
-/*   Updated: 2024/09/16 13:06:55 by hbenaddi         ###   ########.fr       */
+/*   Updated: 2024/09/16 18:40:20 by hbenaddi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int init_forks(t_table *table)
+int    init_forks(t_table *table)
 {
     int i;
-
-    if (table == NULL || table->human <= 0)
-    {
-        printf("Error: Invalid table or number of philosophers\n");
-        return (0);
-    }
-
+    i = 0;
     table->forks = malloc(sizeof(t_forks) * table->human);
     if (!table->forks)
-    {
-        printf("Error: Memory allocation failed for forks\n");
         return (0);
-    }
-
-    i = 0;
     while (i < table->human)
     {
-        table->forks[i].num = i;
         if (pthread_mutex_init(&table->forks[i].locked, NULL) != 0)
         {
-            printf("Error: Mutex initialization failed\n");
-            // Free already allocated memory
-            while (--i >= 0)
-                pthread_mutex_destroy(&table->forks[i].locked);
-            free(table->forks);
+            printf("Error: Failed to initialize mutex\n");
             return (0);
         }
+        table->forks[i].num = i;
         i++;
     }
-
     if (pthread_mutex_init(&table->die_mutex, NULL) != 0)
     {
-        printf("Error: Die mutex initialization failed\n");
-        // Free all allocated resources
-        for (i = 0; i < table->human; i++)
-            pthread_mutex_destroy(&table->forks[i].locked);
-        free(table->forks);
+        printf("Error: Failed to initialize die_mutex\n");
         return (0);
     }
-
     return (1);
 }
-// int    init_forks(t_forks *forks, t_table *table)
-// {
-//     int i;
-
-//     i = 0;
-//     table->forks = malloc(sizeof(t_forks) * table->human);
-//     if (!table->forks)
-//         return (0);
-//     while (i < table->human)
-//     {
-//         forks[i].num = i;
-//         handle_mutex(&forks[i].locked, INIT);
-//         i++;
-//     }
-//     handle_mutex(&table->die_mutex, INIT);
-//     return (1);
-// }
-int    init_philo(t_philo *philo, t_forks *fork, t_table *table)
+int    init_philo(t_table *table)
 {
     int i;
 
@@ -85,16 +47,15 @@ int    init_philo(t_philo *philo, t_forks *fork, t_table *table)
     table->starting = get_curren_time();
     while (i < table->human)
     {
-        philo->id = i + 1;
-        philo->meal_counter = 0;
-        philo->time_from_last_meal = 0;
-        philo->using_left = 0;
-        table->died = 0;
-        philo->using_right = 0;
-        philo->left_fork = &fork[i];
-        philo->right_forks = &fork[(i + 1) % table->human];
-        handle_mutex(&philo->meal_lock, INIT);
-        philo[i].table = table;
+        table->philo[i].id = i + 1;
+        table->philo[i].meal_counter = 0;
+        table->philo[i].time_from_last_meal = 0;
+        table->philo[i].using_left = 0;
+        table->philo[i].using_right = 0;
+        table->philo[i].left_fork = &table->forks[i];
+        table->philo[i].right_forks = &table->forks[(i + 1) % table->human];
+        handle_mutex(&table->philo[i].meal_lock, INIT);
+        table->philo[i].table = table;
         i++;
     }
     return (1);
@@ -130,7 +91,7 @@ int    parsing(t_table *arg, char **av)
         printf("Error : In the init of forks\n");
         return (0);
     }
-    if (init_philo(arg->philo, arg->forks, arg) == 0)
+    if (init_philo(arg) == 0)
     {
         printf("Error : In the init of philo\n");
         return (0);
