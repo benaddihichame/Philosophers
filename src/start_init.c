@@ -6,7 +6,7 @@
 /*   By: hbenaddi <hbenaddi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:46:27 by hbenaddi          #+#    #+#             */
-/*   Updated: 2024/09/16 18:40:20 by hbenaddi         ###   ########.fr       */
+/*   Updated: 2024/09/17 21:58:57 by hbenaddi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ int    init_philo(t_table *table)
     table->starting = get_curren_time();
     while (i < table->human)
     {
+        table->died = 0;
         table->philo[i].id = i + 1;
         table->philo[i].meal_counter = 0;
         table->philo[i].time_from_last_meal = 0;
@@ -77,9 +78,9 @@ int test_param(t_table *arg)
 int    parsing(t_table *arg, char **av)
 {
     arg->human = mod_atol(av[1]);
-    arg->time_to_die = mod_atol(av[2]) * 1000;
-    arg->time_to_eat = mod_atol(av[3]) * 1000;
-    arg->time_to_sleep = mod_atol(av[4]) * 1000;
+    arg->time_to_die = mod_atol(av[2]);
+    arg->time_to_eat = mod_atol(av[3]);
+    arg->time_to_sleep = mod_atol(av[4]);
     if (av[5])
         arg->size_stomach = mod_atol(av[5]);
     else
