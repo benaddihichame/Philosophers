@@ -18,10 +18,11 @@ int	is_full(t_table *table, int i)
 	if (table->philo[i].meal_counter == table->size_stomach)
 		i++;
 	handle_mutex(&table->die_mutex, UNLOCK);
-	if(i == table->human)
+	if (i == table->human)
 		return (1);
 	return (0);
 }
+
 void	death(t_table *table, int i)
 {
 	handle_mutex(&table->philo[i].meal_lock, UNLOCK);
@@ -30,21 +31,23 @@ void	death(t_table *table, int i)
 	table->died = 1;
 	handle_mutex(&table->die_mutex, UNLOCK);
 }
+
 void	*undertaker(void *arg)
 {
-	int	i;
+	t_table	*table;
+	int		i;
 
-	t_table *table;
 	table = (t_table *)arg;
 	while (table->died == 0)
 	{
-		i =  0;
+		i = 0;
 		while (i < table->human)
 		{
-			if(is_full(table, i))
+			if (is_full(table, i))
 				return (NULL);
 			handle_mutex(&table->philo[i].meal_lock, LOCK);
-			if (get_curren_time() - table->starting - table->philo[i].time_from_last_meal > table->time_to_die)
+			if (get_curren_time() - table->starting - \
+			table->philo[i].time_from_last_meal > table->time_to_die)
 				death(table, i);
 			handle_mutex(&table->philo[i].meal_lock, UNLOCK);
 			i++;
@@ -53,16 +56,18 @@ void	*undertaker(void *arg)
 	}
 	return (NULL);
 }
+
 void	*routine(void *arg)
 {
-	t_philo *philo;
+	t_philo	*philo;
+
 	philo = (t_philo *)arg;
-	while(1)
+	while (1)
 	{
 		handle_mutex(&philo->table->die_mutex, LOCK);
 		if (philo->table->died == 1)
 		{
-		handle_mutex(&philo->table->die_mutex, UNLOCK);
+			handle_mutex(&philo->table->die_mutex, UNLOCK);
 			break ;
 		}
 		handle_mutex(&philo->table->die_mutex, UNLOCK);
@@ -74,18 +79,20 @@ void	*routine(void *arg)
 	}
 	return (NULL);
 }
-int    init_thread(t_table *table)
+
+int	init_thread(t_table *table)
 {
-    int i;   
-    
+	int	i;
+
 	i = 0;
-    while (i < table->human)
-    {
-        if (pthread_create(&table->philo[i].philo_thread, NULL, &routine, &table->philo[i]))
+	while (i < table->human)
+	{
+		if (pthread_create(&table->philo[i].philo_thread, NULL, \
+		&routine, &table->philo[i]))
 			return (0);
-        usleep(100);
+		usleep(100);
 		i++;
-    }
+	}
 	if (pthread_create(&table->death_thread, NULL, &undertaker, table))
 		return (0);
 	pthread_join(table->death_thread, NULL);
