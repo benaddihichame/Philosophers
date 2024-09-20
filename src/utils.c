@@ -38,7 +38,7 @@ void	who_is_doing(t_philo *philo, t_action code)
 	}
 	handle_mutex(&philo->table->die_mutex, UNLOCK);
 	if (code == DIE)
-		printf("\033[38;5;34m%ldThe Philo num %d \
+		printf("\033[38;5;34m%ld The Philo num %d \
 		 DIED\033[0m\n", time, philo->id);
 }
 

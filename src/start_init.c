@@ -6,7 +6,7 @@
 /*   By: hbenaddi <hbenaddi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:46:27 by hbenaddi          #+#    #+#             */
-/*   Updated: 2024/09/18 18:11:19 by hbenaddi         ###   ########.fr       */
+/*   Updated: 2024/09/20 12:57:22 by hbenaddi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,11 @@ int	parsing(t_table *arg, char **av)
 	arg->time_to_eat = mod_atol(av[3]);
 	arg->time_to_sleep = mod_atol(av[4]);
 	if (av[5])
+	{
 		arg->size_stomach = mod_atol(av[5]);
+		if (arg->size_stomach < 0)
+			return (0);
+	}
 	else
 		arg->size_stomach = -1;
 	if (test_param(arg) == 0)

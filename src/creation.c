@@ -6,7 +6,7 @@
 /*   By: hbenaddi <hbenaddi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:35:34 by hbenaddi          #+#    #+#             */
-/*   Updated: 2024/09/17 15:32:23 by hbenaddi         ###   ########.fr       */
+/*   Updated: 2024/09/20 12:40:14 by hbenaddi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,19 +40,23 @@ void	*undertaker(void *arg)
 	table = (t_table *)arg;
 	while (table->died == 0)
 	{
-		i = 0;
-		while (i < table->human)
+		i = -1;
+		while (++i < table->human)
 		{
 			if (is_full(table, i))
 				return (NULL);
 			handle_mutex(&table->philo[i].meal_lock, LOCK);
 			if (get_curren_time() - table->starting - \
 			table->philo[i].time_from_last_meal > table->time_to_die)
+			{
 				death(table, i);
+				handle_mutex(&table->philo[i].meal_lock, UNLOCK);
+				return (NULL);
+			}
 			handle_mutex(&table->philo[i].meal_lock, UNLOCK);
-			i++;
 		}
-		usleep(1000);
+		if (table->died)
+			return (NULL);
 	}
 	return (NULL);
 }

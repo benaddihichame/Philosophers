@@ -6,7 +6,7 @@
 /*   By: hbenaddi <hbenaddi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 13:55:48 by hbenaddi          #+#    #+#             */
-/*   Updated: 2024/09/18 18:18:21 by hbenaddi         ###   ########.fr       */
+/*   Updated: 2024/09/20 10:46:09 by hbenaddi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ typedef enum e_code
 	LOCK,
 	UNLOCK,
 	INIT,
-	DETACH,
 	DESTROY,
 	CREATE,
 }					t_code;
