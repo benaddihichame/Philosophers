@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hbenaddi <hbenaddi@student.42lehavre.fr    +#+  +:+       +#+         #
+#    By: hbenaddi <hbenaddi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/15 22:49:44 by hbenaddi          #+#    #+#              #
-#    Updated: 2024/09/16 12:24:44 by hbenaddi         ###   ########.fr        #
+#    Updated: 2024/09/23 12:02:00 by hbenaddi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
 CFLAGS = -Wall -Werror -Wextra -Iinclude  -pthread -g3
-NAME = philosopher
+NAME = philo
 SRC_DIR = src
 OBJ_DIR = obj
 CMD_DIR = cmd

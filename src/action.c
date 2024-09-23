@@ -6,7 +6,7 @@
 /*   By: hbenaddi <hbenaddi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 17:41:28 by hbenaddi          #+#    #+#             */
-/*   Updated: 2024/09/17 15:33:32 by hbenaddi         ###   ########.fr       */
+/*   Updated: 2024/09/23 11:25:40 by hbenaddi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,6 @@ void	take_fork(t_philo *philo)
 {
 	if (philo->left_fork->num < philo->right_forks->num)
 	{
-		if (philo->table->human == 1)
-		{
-			usleep(philo->table->time_to_die * 2000);
-			return ;
-		}
 		handle_mutex(&philo->left_fork->locked, LOCK);
 		who_is_doing(philo, GRABLEFT);
 		handle_mutex(&philo->right_forks->locked, LOCK);
@@ -30,11 +25,6 @@ void	take_fork(t_philo *philo)
 	{
 		handle_mutex(&philo->right_forks->locked, LOCK);
 		who_is_doing(philo, GRABRIGHT);
-		if (philo->table->human == 1)
-		{
-			usleep(philo->table->time_to_die * 2000);
-			return ;
-		}
 		handle_mutex(&philo->left_fork->locked, LOCK);
 		who_is_doing(philo, GRABLEFT);
 	}
