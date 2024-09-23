@@ -6,7 +6,7 @@
 /*   By: hbenaddi <hbenaddi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:35:34 by hbenaddi          #+#    #+#             */
-/*   Updated: 2024/09/23 13:18:42 by hbenaddi         ###   ########.fr       */
+/*   Updated: 2024/09/23 16:54:34 by hbenaddi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	*routine(void *arg)
 	philo = (t_philo *)arg;
 	if (philo->table->human == 1)
 	{
-		who_is_doing(philo, GRABRIGHT);
+		who_is_doing(philo, GRABLEFT);
 		usleep(philo->table->time_to_die * 1000);
 		return (NULL);
 	}

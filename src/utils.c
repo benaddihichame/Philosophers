@@ -6,7 +6,7 @@
 /*   By: hbenaddi <hbenaddi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 13:39:44 by hbenaddi          #+#    #+#             */
-/*   Updated: 2024/09/17 22:52:25 by hbenaddi         ###   ########.fr       */
+/*   Updated: 2024/09/23 14:52:40 by hbenaddi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,12 +66,11 @@ void	free_all(t_table *table)
 	i = 0;
 	while (i < table->human)
 	{
-		pthread_mutex_destroy(&table->philo[i].meal_lock);
-		pthread_mutex_destroy(&table->forks[i].locked);
+		handle_mutex(&table->philo[i].meal_lock, DESTROY);
+		handle_mutex(&table->forks[i].locked, DESTROY);
 		i++;
 	}
-	i = 0;
-	pthread_mutex_destroy(&table->die_mutex);
+	handle_mutex(&table->die_mutex, DESTROY);
 	free(table->philo);
 	free(table->forks);
 }
